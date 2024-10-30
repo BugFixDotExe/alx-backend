@@ -12,6 +12,14 @@ from typing import List
 
 
 def index_range(page: int, page_size: int) -> tuple:
+    '''
+    index_range: A function that computes the index range
+    Args:
+        page: the page
+        page_size: the page size
+    Returns:
+        A tuples containg the start and end page numbers
+    '''
     start_index = (page - 1) * page_size
     end_index = start_index + page_size
     return (start_index, end_index)
@@ -23,6 +31,9 @@ class Server:
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
+        '''
+        The consturcutor of the class
+        '''
         self.__dataset = None
 
     def dataset(self) -> List[List]:
@@ -37,6 +48,14 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+        '''
+        get_page: A function that retireves the content of the CSV
+        Args:
+            page(int): the start page
+            page_size(int): the amout of content of the page
+        Returns:
+            A list containg the list of of matching computed page and page size
+        '''
         assert type(page) is int and type(page_size) is int
         assert page > 0 and page_size > 0
         ret_dataset = self.dataset()
