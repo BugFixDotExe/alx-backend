@@ -2,9 +2,8 @@
 '''
 A Python script that acts as a caching system
 '''
-from typing_extensions import Any
 BaseCaching = __import__('base_caching').BaseCaching
-
+from typing_extensions import Any
 
 class BasicCache(BaseCaching):
     '''
