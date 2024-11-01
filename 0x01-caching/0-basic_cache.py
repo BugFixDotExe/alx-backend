@@ -17,7 +17,7 @@ class BasicCache(BaseCaching):
         '''
         super().__init__()
 
-    def put(self, key: str, item):
+    def put(self, key, item):
         '''
         put: A method that inserts items into the dict
         Args:
@@ -30,7 +30,7 @@ class BasicCache(BaseCaching):
             pass
         self.cache_data[key] = item
 
-    def get(self, key: str) -> Any:
+    def get(self, key):
         '''
         get: A method when given a key fetches the value
         Args:
