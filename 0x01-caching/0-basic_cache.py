@@ -2,7 +2,6 @@
 '''
 A Python script that acts as a caching system
 '''
-from typing_extensions import Any
 BaseCaching = __import__('base_caching').BaseCaching
 
 
@@ -27,7 +26,7 @@ class BasicCache(BaseCaching):
             Nothing
         '''
         if key is None or item is None:
-            pass
+            return
         self.cache_data[key] = item
 
     def get(self, key):
