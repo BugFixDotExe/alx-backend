@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''
-A Python script that acts as a caching system
+A Python script  that inherits from BaseCaching and is a caching system
 '''
 BaseCaching = __import__('base_caching').BaseCaching
 
