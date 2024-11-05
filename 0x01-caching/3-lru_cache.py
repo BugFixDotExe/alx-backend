@@ -14,10 +14,11 @@ class LRUCache(BaseCaching):
         initializing the parent constructor so as to have
         access to the internal cache dict
         '''
+
         super().__init__()
-        self.key_tracker = [] # This behaves like a stack
-    
-        
+        # This behaves like a stack
+        self.key_tracker = []
+
     def put(self, key, item):
         '''
         put: A method that inserts items into the dict
@@ -30,11 +31,11 @@ class LRUCache(BaseCaching):
         if key is None or item is None:
             return
 
-        if key not in self.internal_dict:
-            self.internal_dict[key] = 0
-
         if len(list(self.cache_data)) >= BaseCaching.MAX_ITEMS:
-            pass
+            if len(self.key_tracker) > 0:
+                popped_key = self.key_tracker.pop(0)
+                del self.cache_data[popped_key]
+                print(f'DISCARD: {popped_key}')
         self.cache_data[key] = item
 
     def get(self, key):
@@ -50,4 +51,7 @@ class LRUCache(BaseCaching):
         if self.cache_data.get(key) is None:
             return None
         else:
+            if key in self.key_tracker:
+                self.key_tracker.remove(key)
+            self.key_tracker.append(key)
             return self.cache_data.get(key)
