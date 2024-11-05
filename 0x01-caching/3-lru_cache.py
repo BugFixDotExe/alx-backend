@@ -36,7 +36,9 @@ class LRUCache(BaseCaching):
                 popped_key = self.key_tracker.pop(0)
                 del self.cache_data[popped_key]
                 print(f'DISCARD: {popped_key}')
-        self.cache_data[key] = item
+                self.cache_data[key] = item
+        else:
+            self.cache_data[key] = item
 
     def get(self, key):
         '''
