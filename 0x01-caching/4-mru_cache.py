@@ -5,19 +5,20 @@ A Python script that  that inherits from BaseCaching and is a caching system
 BaseCaching = __import__('base_caching').BaseCaching
 
 
-class LFUCache(BaseCaching):
+class MRUCache(BaseCaching):
     '''
-    LFUCache a class that inherits BaseCaching
+    MRUCache a class that inherits BaseCaching
     '''
     def __init__(self) -> None:
         '''
         initializing the parent constructor so as to have
         access to the internal cache dict
         '''
+
         super().__init__()
-        self.internal_dict = {}
-    
-        
+        # This behaves like a stack
+        self.key_tracker = []
+
     def put(self, key, item):
         '''
         put: A method that inserts items into the dict
@@ -30,17 +31,14 @@ class LFUCache(BaseCaching):
         if key is None or item is None:
             return
 
-        if key not in self.internal_dict:
-            self.internal_dict[key] = 0
-
         if len(list(self.cache_data)) >= BaseCaching.MAX_ITEMS:
-            val_based_sort = {k: v for k, v in sorted(self.internal_dict.items(), key=lambda item: item[1])}
-            for internal_key, internal_value in val_based_sort.items():
-                del self.cache_data[internal_key]
-                del self.internal_dict[internal_key]
-                print(f'DISCARD: {internal_key}')
-                break
-        self.cache_data[key] = item
+            if len(self.key_tracker) > 0:
+                popped_key = self.key_tracker.pop()
+                del self.cache_data[popped_key]
+                print(f'DISCARD: {popped_key}')
+                self.cache_data[key] = item
+        else:
+            self.cache_data[key] = item
 
     def get(self, key):
         '''
@@ -55,6 +53,7 @@ class LFUCache(BaseCaching):
         if self.cache_data.get(key) is None:
             return None
         else:
-            if self.internal_dict.get(key) is not None:
-                self.internal_dict[key] += 1
+            if key in self.key_tracker:
+                self.key_tracker.remove(key)
+            self.key_tracker.append(key)
             return self.cache_data.get(key)
