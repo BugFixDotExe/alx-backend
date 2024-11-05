@@ -30,7 +30,8 @@ class LRUCache(BaseCaching):
         '''
         if key is None or item is None:
             return
-
+        if key in self.key_tracker:
+            self.key_tracker.remove(key)
         if len(list(self.cache_data)) >= BaseCaching.MAX_ITEMS:
             if len(self.key_tracker) > 0:
                 popped_key = self.key_tracker.pop(0)
@@ -39,6 +40,7 @@ class LRUCache(BaseCaching):
                 self.cache_data[key] = item
         else:
             self.cache_data[key] = item
+            self.key_tracker.append(key)
 
     def get(self, key):
         '''
