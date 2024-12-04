@@ -14,13 +14,18 @@ const redisConnect = new Promise((resolve, reject) => {
 });
 
 redisConnect.then(() => {
-	const hsetOp = new Promise((resolve, reject) => {
-		client.hset("HolbertonSchools","Portland", 50, redis.print);
-		client.hset("HolbertonSchools","Seattle", 80, redis.print);
-		client.hset("HolbertonSchools","New York", 20, redis.print);
-		client.hset("HolbertonSchools","Bogota", 50, redis.print);
-		client.hset("HolbertonSchools","Cali", 50, redis.print);
-		client.hset("HolbertonSchools","Paris", 50, redis.print);
-		resolve();
-	)};	
+  const hsetOperation = new Promise((resolve, reject) => {
+    client.hset("HolbertonSchools", "Portland", 50, redis.print);
+    client.hset("HolbertonSchools", "Seattle", 80, redis.print);
+    client.hset("HolbertonSchools", "New York", 20, redis.print);
+    client.hset("HolbertonSchools", "Bogota", 50, redis.print);
+    client.hset("HolbertonSchools", "Cali", 50, redis.print);
+    client.hset("HolbertonSchools", "Paris", 50, redis.print);
+    resolve();
+  });
+  hsetOperation.then(() => {
+    client.hgetall('HolbertonSchools', (err, object) => { 
+      console.log(object);
+    })
+  });
 });
