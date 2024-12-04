@@ -19,12 +19,10 @@ function setNewSchool(schoolName, value) {
   })
 }
 
-function displaySchoolValue(schoolName) {
-  redisConnect.then(() => {
-    client.get(schoolName, (err, reply) => {
-      console.log(reply);
-    });
-  }) 
+async function displaySchoolValue(schoolName) {
+	await client.get(schoolName, (err, reply) => {
+		console.log(reply);
+	})
 }
 
 displaySchoolValue('Holberton');
